@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import controller.ProgramState;
+
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -12,7 +14,7 @@ import java.awt.Rectangle;
  * Klasse fuer die allgemeine Benutzeroberflaeche
  *
  * @author Simon Le
- * @version 31.05.2022
+ * @version 13.06.2022
  */
 
 public class MainWindow extends JFrame{
@@ -21,7 +23,8 @@ public class MainWindow extends JFrame{
 	private DeathScreen deathScreen;
 	private Dimension windowSize;
 	
-	private boolean ingame;
+	//private boolean ingame;
+	private ProgramState programstate = ProgramState.InMenu;
 	
 	public MainWindow(ActionListener al, Rectangle playerDimensions, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX) {
 		super();
@@ -61,11 +64,14 @@ public class MainWindow extends JFrame{
 	public void render(int playerPosY, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX, int score) {
 		gameView.movePlayer(playerPosY);
 		gameView.movePipes(roehrenArrayDimensions);
-		gameView.moveBackground(backgroundsPosX);
-		if (ingame)
+		
+		if (programstate != ProgramState.Dead)
+			gameView.moveBackground(backgroundsPosX);
+		
+		if (programstate == ProgramState.InGame)
 			gameView.updateScore(score);
 		
-		if(!ingame)
+		if(programstate == ProgramState.InMenu)
 			SwingUtilities.updateComponentTreeUI(this);
 	}
 	
@@ -78,7 +84,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	public JButton getQuitButton() {
-		if (ingame)
+		if (programstate == ProgramState.InMenu)
 			return menuView.getQuitButton();
 		else
 			return deathScreen.getQuitButton();
@@ -97,24 +103,35 @@ public class MainWindow extends JFrame{
 		remove(menuView);
 		requestFocus();
 		SwingUtilities.updateComponentTreeUI(this); 
-		ingame = true;
+		programstate = ProgramState.InGame;
 	}
 	
+	/**
+	 * sobald man stirbt, erscheint der Score in der Mitte sowie 2 Buttons zum Neustarten bzw. Schliessen
+	 * 
+	 * @param score
+	 * @version 01.06.2022
+	 */
 	public void die(int score) {
 		remove(gameView);
 		add(deathScreen);
 		add(gameView);
 		deathScreen.setScore(score);
 		gameView.removeScore();
-		ingame = false;
+		programstate = ProgramState.Dead;
 		requestFocus();
 		SwingUtilities.updateComponentTreeUI(this); 
 	}
 	
+	/**
+	 * Methode, um das Spiel neuzustarten
+	 * 
+	 * @version 01.06.2022
+	 */
 	public void restart() {
 		remove(deathScreen);
 		requestFocus();
 		SwingUtilities.updateComponentTreeUI(this); 
-		ingame = true;		
+		programstate = ProgramState.InGame;		
 	}
 }

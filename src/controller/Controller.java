@@ -13,7 +13,7 @@ import view.MainWindow;
  * Controller für die Programmsteuerung
  *
  * @author Simon Le
- * @version 31.05.2022
+ * @version 13.06.2022
  */
 
 public class Controller implements ActionListener, KeyListener, Runnable{
@@ -22,7 +22,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	private Model model;
 	private MainWindow mainWindow;
 	
-	boolean running = false;
+	private ProgramState programstate = ProgramState.InMenu;
 	
 	public Controller() {
 		model = new Model();
@@ -40,21 +40,20 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == mainWindow.getStartButton()) {
 			mainWindow.startGame();
-			running = true;	
+			programstate = ProgramState.InGame;
 		}
 		else if (ae.getSource() == mainWindow.getQuitButton()) {
 			System.exit(0);
 		}
 		else if (ae.getSource() == mainWindow.getRestartButton()) {
 			restart();
-			running = true;
 		}
 	}
 
 
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_SPACE) {
-			if(running)
+			if(programstate == ProgramState.InGame)
 				model.springen();             
 		}
 		else if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
@@ -119,8 +118,9 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	 * @version 23.05.2022
 	 */
 	public void tick() {
+		if(programstate != ProgramState.Dead)
 		model.moveBackground();
-		if(running)
+		if(programstate == ProgramState.InGame)
 			model.tick();
 		
 		/*
@@ -130,7 +130,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		Rectangle pd = model.getPlayerDimensions();   
 		if (pd.getY() >= (mainWindow.getWindowSize().getHeight() - pd.getHeight()) || model.isPlayerColliding()) {
 			//System.out.println("Am Boden gelandet --> Verloren!");
-			running = false;
+			programstate = ProgramState.Dead;
 			mainWindow.die(model.getScore());
 		}
 		/*
@@ -157,7 +157,8 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	public void restart() {
 		model = new Model();
 		mainWindow.restart();
-		running = true;
+		programstate = ProgramState.InGame;
+		
 	}
 
 	public static void main(String[] args) {
