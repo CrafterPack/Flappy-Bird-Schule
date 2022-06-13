@@ -1,18 +1,20 @@
 package model;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 
 /**
  * Spiel-Logik
  *
  * @author Simon Le
- * @version 31.05.2022
+ * @version 13.06.2022
  */
 
 public class Model {
 
 	private Rectangle player;
-	private int playerPosY;
+	private double playerPosY;
+	private double acceleration;
 	
 	private Rectangle[][] roehrenArray;
 	private boolean[] pipeScored;
@@ -30,8 +32,8 @@ public class Model {
 	public Model() {
 		
 		//Instanzieren des Spieler und der Roehren
-		playerPosY = 300; //Starthoehe kann hier initialisiert werden
-		player = new Rectangle(100, playerPosY, 50, 50  );
+		playerPosY = 300f; //Starthoehe kann hier initialisiert werden
+		player = new Rectangle(100, (int) playerPosY, 50, 50  );
 		
 		roehrenArray = new Rectangle[2][3];
 		for(int i = 0; i < 2; i++) {
@@ -74,11 +76,18 @@ public class Model {
 	 * Methode fuer die Game Loop
 	 * Hier bekommt der Spieler Gravitation und die Roehren bewegen sich
 	 * 
-	 * @version 31.05.2022
+	 * @version 13.06.2022
 	 */
 	public void tick() {
-		playerPosY+=5;
-		player.setLocation((int) player.getX(), playerPosY);   
+		acceleration += 0.15f;
+		playerPosY+=acceleration;
+		if (playerPosY <= 0f) { //Der Spieler kann nicht ueber die Decke hinaus fliegen
+			playerPosY = 0f; 
+			acceleration = 0f;
+		}
+		Point newPos = new Point();
+		newPos.setLocation(player.getX(), playerPosY);
+		player.setLocation(newPos);   
 		
 		for(int i = 0; i < 3; i++) {    
 				if (roehrenArray[0][i].getX() <= -80) {
@@ -118,16 +127,12 @@ public class Model {
 	}
 	
 	/**
-	 * Beim ausfuehren dieser Methode erhaelt der Spieler 30px an Hoehe
+	 * Beim ausfuehren dieser Methode gewinnt der Spieler an Hoehe
 	 * 
-	 * @version 31.05.2022
+	 * @version 13.06.2022
 	 */
 	public void springen() {
-		for (int i = 0; i < 70; i++) {
-			playerPosY-=1;
-			if (playerPosY <= 0) playerPosY = 0; //Der Spieler kann nicht ueber die Decke hinaus fliegen 
-			player.setLocation((int) player.getX(), playerPosY);
-		}
+		acceleration-=5f;
 	}  
 	
 	/**
