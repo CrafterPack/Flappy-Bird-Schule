@@ -59,6 +59,7 @@ public class MainWindow extends JFrame{
 	 * @param playerPosY
 	 * @param roehrenArrayDimensions
 	 * @param backgroundsPosX
+	 * @param score
 	 * @version 31.05.2022
 	 */
 	public void render(int playerPosY, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX, int score) {
