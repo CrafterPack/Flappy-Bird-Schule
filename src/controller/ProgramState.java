@@ -8,11 +8,12 @@ package controller;
  * Ziel: bestimmte Methoden werden nur in einem bestimmten Zustand ausgeführt
  * 
  * @author Simon Le
- * @version 13.06.2022
+ * @version 15.06.2022
  *
  */
 public enum ProgramState {
 	InMenu,
 	InGame,
-	Dead
+	Dead,
+	Paused
 }

@@ -14,13 +14,14 @@ import java.awt.Rectangle;
  * Klasse fuer die allgemeine Benutzeroberflaeche
  *
  * @author Simon Le
- * @version 13.06.2022
+ * @version 15.06.2022
  */
 
 public class MainWindow extends JFrame{
 	private GameView gameView;
 	private MenuView menuView;
 	private DeathScreen deathScreen;
+	private PauseMenu pauseMenu;
 	private Dimension windowSize;
 	
 	//private boolean ingame;
@@ -36,6 +37,8 @@ public class MainWindow extends JFrame{
 		gameView = new GameView(windowSize, playerDimensions, roehrenArrayDimensions, backgroundsPosX);
 		deathScreen = new DeathScreen(windowSize);
 		deathScreen.addActionListener(al);
+		pauseMenu = new PauseMenu(windowSize);
+		pauseMenu.addActionListener(al);
 		add(menuView);
 		add(gameView);
 		SwingUtilities.updateComponentTreeUI(this);
@@ -66,7 +69,7 @@ public class MainWindow extends JFrame{
 		gameView.movePlayer(playerPosY);
 		gameView.movePipes(roehrenArrayDimensions);
 		
-		if (programstate != ProgramState.Dead)
+		if (programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
 			gameView.moveBackground(backgroundsPosX);
 		
 		if (programstate == ProgramState.InGame)
@@ -87,12 +90,18 @@ public class MainWindow extends JFrame{
 	public JButton getQuitButton() {
 		if (programstate == ProgramState.InMenu)
 			return menuView.getQuitButton();
-		else
+		else if (programstate == ProgramState.Dead)
 			return deathScreen.getQuitButton();
+		else
+			return pauseMenu.getQuitButton();
 	}
 	
 	public JButton getRestartButton() {
 		return deathScreen.getRestartButton();
+	}
+	
+	public JButton getResumeButton() {
+		return pauseMenu.getResumeButton();
 	}
 	
 	/**
@@ -134,5 +143,31 @@ public class MainWindow extends JFrame{
 		requestFocus();
 		SwingUtilities.updateComponentTreeUI(this); 
 		programstate = ProgramState.InGame;		
+	}
+	
+	/**
+	 * Methode, um das Spiel zu pausieren
+	 * 
+	 * @version 15.06.2022
+	 */
+	public void pause() {
+		remove(gameView);
+		add(pauseMenu);
+		add(gameView);
+		programstate = ProgramState.Paused;
+		requestFocus();
+		SwingUtilities.updateComponentTreeUI(this); 
+	}
+	
+	/**
+	 * Methode, um das Spiel fortzufahren
+	 * 
+	 * @version 15.06.2022
+	 */
+	public void resume() {
+		remove(pauseMenu);
+		programstate = ProgramState.InGame;
+		requestFocus();
+		SwingUtilities.updateComponentTreeUI(this); 
 	}
 }

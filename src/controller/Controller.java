@@ -13,7 +13,7 @@ import view.MainWindow;
  * Controller für die Programmsteuerung
  *
  * @author Simon Le
- * @version 13.06.2022
+ * @version 15.06.2022
  */
 
 public class Controller implements ActionListener, KeyListener, Runnable{
@@ -48,16 +48,33 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		else if (ae.getSource() == mainWindow.getRestartButton()) {
 			restart();
 		}
+		else if (ae.getSource() == mainWindow.getResumeButton()) {
+			programstate = ProgramState.InGame;
+			mainWindow.resume();
+		}
 	}
 
 
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_SPACE) {
-			if(programstate == ProgramState.InGame)
-				model.springen();             
+			if (programstate == ProgramState.InMenu) {
+				mainWindow.startGame();
+				programstate = ProgramState.InGame;
+			}
+			else if (programstate == ProgramState.InGame)
+				model.springen();
+			else if (programstate == ProgramState.Dead)
+				restart();
 		}
 		else if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-			System.exit(0);
+			if (programstate == ProgramState.InGame) {
+				programstate = ProgramState.Paused;
+				mainWindow.pause();
+			}
+			else if (programstate == ProgramState.Paused) {
+				programstate = ProgramState.InGame;
+				mainWindow.resume();
+			}
 		}
 	}
 	
@@ -118,7 +135,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	 * @version 23.05.2022
 	 */
 	public void tick() {
-		if(programstate != ProgramState.Dead)
+		if(programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
 		model.moveBackground();
 		if(programstate == ProgramState.InGame)
 			model.tick();
