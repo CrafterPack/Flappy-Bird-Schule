@@ -67,7 +67,9 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 				restart();
 		}
 		else if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-			if (programstate == ProgramState.InGame) {
+			if (programstate == ProgramState.InMenu || programstate == ProgramState.Dead) 
+				System.exit(0);
+			else if (programstate == ProgramState.InGame) {
 				programstate = ProgramState.Paused;
 				mainWindow.pause();
 			}
