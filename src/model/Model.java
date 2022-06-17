@@ -134,7 +134,7 @@ public class Model {
 	 * @param index
 	 * @version 14.06.2022
 	 */
-	protected void movePipesVertically(int index) {
+	private void movePipesVertically(int index) {
 		Rectangle upperPipe = roehrenArray[0][index];
 		Rectangle lowerPipe = roehrenArray[1][index];
 		
