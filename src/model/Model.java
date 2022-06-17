@@ -7,7 +7,7 @@ import java.awt.Rectangle;
  * Spiel-Logik
  *
  * @author Simon Le
- * @version 14.06.2022
+ * @version 17.06.2022
  */
 
 public class Model {
@@ -134,7 +134,7 @@ public class Model {
 	 * @param index
 	 * @version 14.06.2022
 	 */
-	public void movePipesVertically(int index) {
+	protected void movePipesVertically(int index) {
 		Rectangle upperPipe = roehrenArray[0][index];
 		Rectangle lowerPipe = roehrenArray[1][index];
 		

@@ -53,27 +53,27 @@ public abstract class MenuSuperClass extends JPanel{
 		setVisible(true);
 	}
 	
-	public void setLabelBounds(int x, int y, int width, int height) {
+	protected void setLabelBounds(int x, int y, int width, int height) {
 		label.setBounds(x, y, width, height);
 	}
 	
-	public void setLabelText(String text) {
+	protected void setLabelText(String text) {
 		label.setText(text);
 	}
 	
-	public void setLabelIcon(Icon icon) {
+	protected void setLabelIcon(Icon icon) {
 		label.setIcon(icon);
 	}
 	
-	public JLabel getLabel() {
+	protected JLabel getLabel() {
 		return label;
 	}
 	
-	public JButton getButton1() {
+	protected JButton getButton1() {
 		return button1;
 	}
 	
-	public JButton getButton2() {
+	protected JButton getButton2() {
 		return button2;
 	}
 }
