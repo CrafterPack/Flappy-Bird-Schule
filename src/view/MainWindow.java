@@ -14,7 +14,7 @@ import java.awt.Rectangle;
  * Klasse fuer die allgemeine Benutzeroberflaeche
  *
  * @author Simon Le
- * @version 15.06.2022
+ * @version 17.06.2022
  */
 
 public class MainWindow extends JFrame{
@@ -32,13 +32,10 @@ public class MainWindow extends JFrame{
 		windowSize = new Dimension(480, 640);
 		
 		//Instanziieren der JPanels
-		menuView = new MenuView(windowSize);
-		menuView.addActionListener(al);
+		menuView = new MenuView(windowSize, al);
 		gameView = new GameView(windowSize, playerDimensions, roehrenArrayDimensions, backgroundsPosX);
-		deathScreen = new DeathScreen(windowSize);
-		deathScreen.addActionListener(al);
-		pauseMenu = new PauseMenu(windowSize);
-		pauseMenu.addActionListener(al);
+		deathScreen = new DeathScreen(windowSize, al);
+		pauseMenu = new PauseMenu(windowSize, al);
 		add(menuView);
 		add(gameView);
 		SwingUtilities.updateComponentTreeUI(this);
