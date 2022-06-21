@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import controller.ProgramState;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 
@@ -14,7 +15,7 @@ import java.awt.Rectangle;
  * Klasse fuer die allgemeine Benutzeroberflaeche
  *
  * @author Simon Le
- * @version 17.06.2022
+ * @version 21.06.2022
  */
 
 public class MainWindow extends JFrame{
@@ -27,7 +28,7 @@ public class MainWindow extends JFrame{
 	//private boolean ingame;
 	private ProgramState programstate = ProgramState.InMenu;
 	
-	public MainWindow(ActionListener al, Rectangle playerDimensions, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX) {
+	public MainWindow(ActionListener al, Rectangle playerDimensions, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX, KeyListener kl) {
 		super();
 		windowSize = new Dimension(480, 640);
 		
@@ -38,7 +39,10 @@ public class MainWindow extends JFrame{
 		pauseMenu = new PauseMenu(windowSize, al);
 		add(menuView);
 		add(gameView);
-		SwingUtilities.updateComponentTreeUI(this);
+
+		addKeyListener(kl);
+		menuView.getNameInput().addKeyListener(kl);
+		menuView.getNameInput().requestFocus();
 		
 		/*
 		 * Drueckt man oben rechts auf das X, wird das Programm in der Regel nicht komplett geschlossen, 
@@ -72,8 +76,8 @@ public class MainWindow extends JFrame{
 		if (programstate == ProgramState.InGame)
 			gameView.updateScore(score);
 		
-		if(programstate == ProgramState.InMenu)
-			SwingUtilities.updateComponentTreeUI(this);
+		if(programstate == ProgramState.InMenu) 
+			this.repaint(0, 0, 0, 640, 480);
 	}
 	
 	public Dimension getWindowSize() {
@@ -99,6 +103,10 @@ public class MainWindow extends JFrame{
 	
 	public JButton getResumeButton() {
 		return pauseMenu.getResumeButton();
+	}
+	
+	public String getName() {
+		return menuView.getNameInput().getText();
 	}
 	
 	/**

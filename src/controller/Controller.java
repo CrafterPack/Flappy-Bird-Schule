@@ -5,31 +5,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
-import model.Model;
+import model.*;
 import view.MainWindow;
 
 /**
  * Controller für die Programmsteuerung
  *
  * @author Simon Le
- * @version 15.06.2022
+ * @version 21.06.2022
  */
 
 public class Controller implements ActionListener, KeyListener, Runnable{
 	
 	private Thread gameThread;
 	private Model model;
+	private Leaderboard leaderBoard;
 	private MainWindow mainWindow;
 	
 	private ProgramState programstate = ProgramState.InMenu;
 	
 	public Controller() {
 		model = new Model();
-		mainWindow = new MainWindow(this, model.getPlayerDimensions(), model.getPipeArray(), model.getBackgroundsPosX());
-		mainWindow.addKeyListener(this);
-		mainWindow.requestFocus();
-		
+		leaderBoard = new Leaderboard();
+		mainWindow = new MainWindow(this, model.getPlayerDimensions(), model.getPipeArray(), model.getBackgroundsPosX(), this);
 		
 		//Game Loop
 		gameThread = new Thread(this);
@@ -39,8 +39,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == mainWindow.getStartButton()) {
-			mainWindow.startGame();
-			programstate = ProgramState.InGame;
+			start();
 		}
 		else if (ae.getSource() == mainWindow.getQuitButton()) {
 			System.exit(0);
@@ -57,11 +56,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_SPACE) {
-			if (programstate == ProgramState.InMenu) {
-				mainWindow.startGame();
-				programstate = ProgramState.InGame;
-			}
-			else if (programstate == ProgramState.InGame)
+			if (programstate == ProgramState.InGame)
 				model.springen();
 			else if (programstate == ProgramState.Dead)
 				restart();
@@ -76,6 +71,11 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 			else if (programstate == ProgramState.Paused) {
 				programstate = ProgramState.InGame;
 				mainWindow.resume();
+			}
+		}
+		else if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+			if (programstate == ProgramState.InMenu) {
+				start();
 			}
 		}
 	}
@@ -148,14 +148,14 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		 */
 		Rectangle pd = model.getPlayerDimensions();   
 		if (pd.getY() >= (mainWindow.getWindowSize().getHeight() - pd.getHeight()) || model.isPlayerColliding()) {
-			//System.out.println("Am Boden gelandet --> Verloren!");
 			programstate = ProgramState.Dead;
 			mainWindow.die(model.getScore());
+			try {
+				leaderBoard.addPlayerToLeaderBoard(model.getScore());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		/*
-		 * else if (model.isPlayerColliding()) {
-		 * System.out.println("Roehre beruehrt --> Verloren!"); System.exit(0); }
-		 */
 	}
 	
 	
@@ -166,6 +166,19 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	 */
 	public void render() {
 		mainWindow.render((int) model.getPlayerDimensions().getY(), model.getPipeArray(), model.getBackgroundsPosX(), model.getScore());
+	}
+	
+	/**
+	 * Methode, um das Spiel zu starten
+	 *
+	 * @version 21.06.2022
+	 */
+	public void start() {
+		if (mainWindow.getName().isBlank()) 
+			return;
+		leaderBoard.setPlayerName(mainWindow.getName().trim());
+		mainWindow.startGame();
+		programstate = ProgramState.InGame;		
 	}
 	
 	/**
