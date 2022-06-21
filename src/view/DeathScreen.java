@@ -12,7 +12,7 @@ import javax.swing.JButton;
  * JPanel erscheint wenn man stirbt
  *
  * @author Simon Le
- * @version 17.06.2022
+ * @version 21.06.2022
  */
 
 public class DeathScreen extends MenuSuperClass{
@@ -21,8 +21,8 @@ public class DeathScreen extends MenuSuperClass{
 		super(windowSize, "Restart", "Quit", al);
 	}
 	
-	public void setScore(int score) {
-		super.setLabelText("You died. Score: " + score);
+	public void setScore(int score, int highscore) {
+		super.setLabelText("<html>You died. Score: " + score + "<br/> Your highscore: " + highscore + "<html>");
 	}
 	
 	public JButton getRestartButton() {

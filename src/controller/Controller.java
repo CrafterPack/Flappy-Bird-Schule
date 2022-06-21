@@ -134,26 +134,27 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	/**
 	 * Game-Loop-Methode fuer das Model
 	 * 
-	 * @version 23.05.2022
+	 * @version 21.06.2022
 	 */
 	public void tick() {
 		if(programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
 		model.moveBackground();
-		if(programstate == ProgramState.InGame)
+		if(programstate == ProgramState.InGame) {
 			model.tick();
 		
-		/*
-		 * Damit model.getPlayerDimensions nicht zweimal wiederholt werden muss, 
-		 * wird pd initialisiert
-		 */
-		Rectangle pd = model.getPlayerDimensions();   
-		if (pd.getY() >= (mainWindow.getWindowSize().getHeight() - pd.getHeight()) || model.isPlayerColliding()) {
-			programstate = ProgramState.Dead;
-			mainWindow.die(model.getScore());
-			try {
-				leaderBoard.addPlayerToLeaderBoard(model.getScore());
-			} catch (IOException e) {
-				e.printStackTrace();
+			/*
+			 * Damit model.getPlayerDimensions nicht zweimal wiederholt werden muss, 
+			 * wird pd initialisiert
+			 */
+			Rectangle pd = model.getPlayerDimensions();   
+			if (pd.getY() >= (mainWindow.getWindowSize().getHeight() - pd.getHeight()) || model.isPlayerColliding()) {
+				programstate = ProgramState.Dead;
+				try {
+					leaderBoard.addPlayerToLeaderBoard(model.getScore());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				mainWindow.die(model.getScore(), leaderBoard.getHighScore());
 			}
 		}
 	}

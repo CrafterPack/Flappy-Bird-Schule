@@ -104,9 +104,9 @@ public class Leaderboard {
 		bfWr.close();
 	}
 	
-	public int getHighScore(String n) {
+	public int getHighScore() {
 		for (int i = 0; i < this.list.size(); i++) {
-			if (list.get(i).getName().equals(n))
+			if (list.get(i).getName().equals(currentPlayerName))
 				return list.get(i).getScore();
 		}
 		

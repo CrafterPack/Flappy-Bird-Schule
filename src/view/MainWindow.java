@@ -67,17 +67,16 @@ public class MainWindow extends JFrame{
 	 * @version 31.05.2022
 	 */
 	public void render(int playerPosY, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX, int score) {
-		gameView.movePlayer(playerPosY);
-		gameView.movePipes(roehrenArrayDimensions);
 		
 		if (programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
 			gameView.moveBackground(backgroundsPosX);
 		
 		if (programstate == ProgramState.InGame)
 			gameView.updateScore(score);
+			gameView.movePlayer(playerPosY);
+			gameView.movePipes(roehrenArrayDimensions);
 		
-		if(programstate == ProgramState.InMenu) 
-			this.repaint(0, 0, 0, 640, 480);
+		this.repaint(0, 0, 0, 640, 480);
 	}
 	
 	public Dimension getWindowSize() {
@@ -125,13 +124,14 @@ public class MainWindow extends JFrame{
 	 * sobald man stirbt, erscheint der Score in der Mitte sowie 2 Buttons zum Neustarten bzw. Schliessen
 	 * 
 	 * @param score
-	 * @version 01.06.2022
+	 * @param highscore
+	 * @version 21.06.2022
 	 */
-	public void die(int score) {
+	public void die(int score, int highscore) {
 		remove(gameView);
 		add(deathScreen);
 		add(gameView);
-		deathScreen.setScore(score);
+		deathScreen.setScore(score, highscore);
 		gameView.removeScore();
 		programstate = ProgramState.Dead;
 		requestFocus();
