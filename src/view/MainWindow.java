@@ -8,14 +8,17 @@ import controller.ProgramState;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+
+import model.Tuple;
 
 /**
  * Klasse fuer die allgemeine Benutzeroberflaeche
  *
  * @author Simon Le
- * @version 21.06.2022
+ * @version 22.06.2022
  */
 
 public class MainWindow extends JFrame{
@@ -24,6 +27,7 @@ public class MainWindow extends JFrame{
 	private DeathScreen deathScreen;
 	private PauseMenu pauseMenu;
 	private Dimension windowSize;
+	private LeaderboardView leaderBoard;
 	
 	//private boolean ingame;
 	private ProgramState programstate = ProgramState.InMenu;
@@ -37,6 +41,7 @@ public class MainWindow extends JFrame{
 		gameView = new GameView(windowSize, playerDimensions, roehrenArrayDimensions, backgroundsPosX);
 		deathScreen = new DeathScreen(windowSize, al);
 		pauseMenu = new PauseMenu(windowSize, al);
+		leaderBoard = new LeaderboardView(windowSize, al);
 		add(menuView);
 		add(gameView);
 
@@ -76,7 +81,7 @@ public class MainWindow extends JFrame{
 			gameView.movePlayer(playerPosY);
 			gameView.movePipes(roehrenArrayDimensions);
 		
-		this.repaint(0, 0, 0, 640, 480);
+		this.repaint(0, 0, 0, (int) windowSize.getWidth(), (int) windowSize.getHeight());
 	}
 	
 	public Dimension getWindowSize() {
@@ -102,6 +107,14 @@ public class MainWindow extends JFrame{
 	
 	public JButton getResumeButton() {
 		return pauseMenu.getResumeButton();
+	}
+	
+	public JButton getOpenLeaderBoardButton() {
+		return deathScreen.getOpenLeaderBoardButton();
+	}
+	
+	public JButton getCloseLeaderBoardButton() {
+		return leaderBoard.getCloseLeaderBoardButton();
 	}
 	
 	public String getName() {
@@ -174,5 +187,50 @@ public class MainWindow extends JFrame{
 		programstate = ProgramState.InGame;
 		requestFocus();
 		SwingUtilities.updateComponentTreeUI(this); 
+	}
+	
+	/**
+	 * Methode, um das Leaderboard zu oeffnen
+	 *
+	 * @version 22.06.2022
+	 */
+	public void openLeaderBoard(ArrayList<Tuple> list) {
+		remove(deathScreen);
+		remove(gameView);
+		add(leaderBoard);
+		add(gameView);
+		for (int i = 0; i < list.size(); i++) {
+			String n = list.get(i).getName();
+			int s = list.get(i).getScore();
+			
+			Object[] obj = {n, s};
+			leaderBoard.addRow(obj);
+		}
+
+		requestFocus();
+		SwingUtilities.updateComponentTreeUI(this);
+	}
+	
+	/**
+	 * Methode, um das Leaderboard zu schliessen
+	 *
+	 * @version 22.06.2022
+	 */
+	public void closeLeaderBoard() {
+		leaderBoard.removeRows();
+		
+		remove(leaderBoard);
+		remove(gameView);
+		
+		switch(programstate) {
+			case InMenu:
+				add(menuView);
+				break;
+			case Dead:
+				add(deathScreen);
+				break;
+		}
+		
+		add(gameView);
 	}
 }

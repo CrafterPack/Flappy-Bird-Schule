@@ -14,7 +14,7 @@ import view.MainWindow;
  * Controller für die Programmsteuerung
  *
  * @author Simon Le
- * @version 21.06.2022
+ * @version 22.06.2022
  */
 
 public class Controller implements ActionListener, KeyListener, Runnable{
@@ -50,6 +50,12 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		else if (ae.getSource() == mainWindow.getResumeButton()) {
 			programstate = ProgramState.InGame;
 			mainWindow.resume();
+		}
+		else if (ae.getSource() == mainWindow.getOpenLeaderBoardButton()) {
+			mainWindow.openLeaderBoard(leaderBoard.getList());
+		}
+		else if (ae.getSource() == mainWindow.getCloseLeaderBoardButton()) {
+			mainWindow.closeLeaderBoard();
 		}
 	}
 

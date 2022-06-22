@@ -21,7 +21,7 @@ import org.json.simple.parser.ParseException;
  * Damit man das Leaderboard nach Schliessen des Spiel beibehaelt, wird es in einer JSON-Datei gespeichert
  * 
  * @author Simon Le
- * @version 21.06.2022
+ * @version 22.06.2022
  */
 
 public class Leaderboard {
@@ -111,5 +111,9 @@ public class Leaderboard {
 		}
 		
 		return 0;
+	}
+	
+	public ArrayList<Tuple> getList() {
+		return list;
 	}
 }
