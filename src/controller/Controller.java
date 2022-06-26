@@ -140,7 +140,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	/**
 	 * Game-Loop-Methode fuer das Model
 	 * 
-	 * @version 21.06.2022
+	 * @version 26.06.2022
 	 */
 	public void tick() {
 		if(programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
