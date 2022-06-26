@@ -85,6 +85,21 @@ public class MainWindow extends JFrame{
 		this.repaint(0, 0, 0, (int) windowSize.getWidth(), (int) windowSize.getHeight());
 	}
 	
+	/**
+	 * Methode, um die Icon der Roehren neuzuskalieren, wenn die sich vertikal bewegen oder zurueckgesetzt werden
+	 * Diese Methode wird nicht in render() ausgefuehrt, da die Roehren sich nur mit 60ticks bewegen und die Methode daher nur 60 mal pro Sekunde ausgefuehrt werden muss. 
+	 * render() hingegen wird mit der FPS ausgefuehrt, also bis zu 1800000 mal pro Sekunde (je nach PC)
+	 *
+	 * @param i
+	 * @param j
+	 * @param newWidth
+	 * @param newHeight
+	 * @version 26.06.2022
+	 */
+	public void resizePipeIcon(int i, int j, int newWidth, int newHeight) {
+		gameView.resizePipeIcon(i, j, newWidth, newHeight);
+	}
+	
 	public Dimension getWindowSize() {
 		return windowSize;
 	}

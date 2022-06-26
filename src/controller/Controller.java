@@ -147,6 +147,15 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		model.moveBackground();
 		if(programstate == ProgramState.InGame) {
 			model.tick();
+			
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 3; j++) {
+					if (model.getPipeArray()[i][j].getX() == 820 || model.getScore() >= 10) {
+						Rectangle r = model.getPipeArray()[i][j];
+						mainWindow.resizePipeIcon(i, j, (int) r.getWidth(), (int) r.getHeight());
+					}
+				}
+			}
 		
 			/*
 			 * Damit model.getPlayerDimensions nicht zweimal wiederholt werden muss, 
@@ -207,6 +216,12 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		mainWindow.restart();
 		programstate = ProgramState.InGame;
 		
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 3; j++) {
+				Rectangle r = model.getPipeArray()[i][j];
+				mainWindow.resizePipeIcon(i, j, (int) r.getWidth(), (int) r.getHeight());
+			}
+		}
 	}
 
 	public static void main(String[] args) {

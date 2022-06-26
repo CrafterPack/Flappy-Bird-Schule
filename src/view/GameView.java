@@ -5,6 +5,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Dimension;
 
@@ -17,7 +18,7 @@ import javax.swing.SwingConstants;
  * Klasse fuer die Spieloberflaeche
  *
  * @author Simon Le
- * @version 31.05.2022
+ * @version 26.06.2022
  */
 
 public class GameView extends JPanel {
@@ -49,9 +50,8 @@ public class GameView extends JPanel {
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				roehrenArray[i][j] = new JLabel();
-				roehrenArray[i][j].setBackground(Color.GREEN);
+				roehrenArray[i][j].setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Pipe" + (i+1) + ".png").getImage().getScaledInstance((int) roehrenArrayDimensions[i][j].getWidth(), (int) roehrenArrayDimensions[i][j].getHeight(), Image.SCALE_DEFAULT)));
 				roehrenArray[i][j].setBounds(roehrenArrayDimensions[i][j]);
-				roehrenArray[i][j].setOpaque(true);
 				roehrenArray[i][j].setVisible(true);
 
 				add(roehrenArray[i][j]);
@@ -95,7 +95,7 @@ public class GameView extends JPanel {
 	public void movePipes(Rectangle[][] roehrenArrayDimensions) {
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
-				roehrenArray[i][j].setBounds(roehrenArrayDimensions[i][j]);
+				roehrenArray[i][j].setBounds(roehrenArrayDimensions[i][j]);					
 			}
 		}
 	}
@@ -130,5 +130,18 @@ public class GameView extends JPanel {
 	 */
 	public void removeScore() {
 		scoreCounter.setText("");
+	}
+	
+	/**
+	 * Methode, um das Icon der Roehren neuzuskalieren, wenn die sich vertikal bewegen oder zurueckgesetzt werden
+	 *
+	 * @param i
+	 * @param j
+	 * @param newWidth
+	 * @param newHeight
+	 * @version 26.06.2022
+	 */
+	public void resizePipeIcon(int i, int j, int newWidth, int newHeight) {
+		roehrenArray[i][j].setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Pipe" + (i+1) + ".png").getImage().getScaledInstance((int) newWidth, (int) newHeight + 1, Image.SCALE_DEFAULT)));
 	}
 }

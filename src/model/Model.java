@@ -7,7 +7,7 @@ import java.awt.Rectangle;
  * Spiel-Logik
  *
  * @author Simon Le
- * @version 17.06.2022
+ * @version 26.06.2022
  */
 
 public class Model {
@@ -34,7 +34,7 @@ public class Model {
 		
 		//Instanzieren des Spieler und der Roehren
 		playerPosY = 300f; //Starthoehe kann hier initialisiert werden
-		player = new Rectangle(100, (int) playerPosY, 50, 50  );
+		player = new Rectangle(100, (int) playerPosY, 75, 50  );
 		
 		roehrenArray = new Rectangle[2][3];
 		for(int i = 0; i < 2; i++) {
