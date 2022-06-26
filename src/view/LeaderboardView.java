@@ -31,6 +31,7 @@ public class LeaderboardView extends JPanel{
 		
 		defaultTableModel = new DefaultTableModel(null, column);
 		table = new JTable(defaultTableModel);
+		table.setDefaultEditor(Object.class, null);
 		scrollPane = new JScrollPane(table);
 		closeLeaderBoardButton = new JButton("Back");
 		
