@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
  * Klasse fuer das Menue
  *
  * @author Simon Le
- * @version 21.06.2022
+ * @version 26.06.2022
  */
 
 public class MenuView extends MenuSuperClass{
@@ -31,7 +31,7 @@ public class MenuView extends MenuSuperClass{
 		super.setLabelText("Logo");
 		
 		nameInput = new JTextField();
-		nameInput.setBounds(40, 430, 400, 50);
+		nameInput.setBounds(40, 360, 400, 50);
 		nameInput.setFont(new Font("Arial", Font.PLAIN, 40));
 
 		add(nameInput);

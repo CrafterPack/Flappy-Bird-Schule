@@ -17,13 +17,13 @@ import javax.swing.SwingConstants;
  * Oberklasse fuer die Menues
  * 
  * @author Simon Le
- * @version 17.06.2022
+ * @version 26.06.2022
  *
  */
 public abstract class MenuSuperClass extends JPanel{
 	
 	private JLabel label;
-	private JButton button1, button2;
+	private JButton button1, button2, leaderBoardButton;
 	
 	public MenuSuperClass(Dimension windowSize, String button1Text, String button2Text, ActionListener al) {
 		super();
@@ -46,6 +46,12 @@ public abstract class MenuSuperClass extends JPanel{
 		button2.setVisible(true);
 		add(button2);
 		button2.addActionListener(al);
+		
+		leaderBoardButton = new JButton("Leaderboard");
+		leaderBoardButton.setBounds(40, 430, 400, 50);
+		leaderBoardButton.setVisible(true);
+		add(leaderBoardButton);
+		leaderBoardButton.addActionListener(al);
 
 		setBounds(0, 0, (int) windowSize.getWidth(), (int) windowSize.getHeight());
 		setLayout(null);
@@ -75,5 +81,9 @@ public abstract class MenuSuperClass extends JPanel{
 	
 	protected JButton getButton2() {
 		return button2;
+	}
+	
+	protected JButton getOpenLeaderBoardButton() {
+		return leaderBoardButton;
 	}
 }

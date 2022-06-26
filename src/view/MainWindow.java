@@ -18,7 +18,7 @@ import model.Tuple;
  * Klasse fuer die allgemeine Benutzeroberflaeche
  *
  * @author Simon Le
- * @version 22.06.2022
+ * @version 26.06.2022
  */
 
 public class MainWindow extends JFrame{
@@ -110,7 +110,16 @@ public class MainWindow extends JFrame{
 	}
 	
 	public JButton getOpenLeaderBoardButton() {
-		return deathScreen.getOpenLeaderBoardButton();
+		switch (programstate) {
+			case InMenu: 
+				return menuView.getOpenLeaderBoardButton();
+			case Paused:
+				return pauseMenu.getOpenLeaderBoardButton();
+			case Dead:
+				return deathScreen.getOpenLeaderBoardButton();
+			default:
+				return null;
+		}
 	}
 	
 	public JButton getCloseLeaderBoardButton() {
@@ -192,10 +201,22 @@ public class MainWindow extends JFrame{
 	/**
 	 * Methode, um das Leaderboard zu oeffnen
 	 *
-	 * @version 22.06.2022
+	 * @version 26.06.2022
 	 */
 	public void openLeaderBoard(ArrayList<Tuple> list) {
-		remove(deathScreen);
+		switch(programstate) {
+		case InMenu:
+			remove(menuView);
+			break;
+		case Paused:
+			remove(pauseMenu);
+			break;
+		case Dead:
+			remove(deathScreen);
+			break;
+		default:
+			break;
+		}
 		remove(gameView);
 		add(leaderBoard);
 		add(gameView);
@@ -206,15 +227,12 @@ public class MainWindow extends JFrame{
 			Object[] obj = {n, s};
 			leaderBoard.addRow(obj);
 		}
-
-		requestFocus();
-		SwingUtilities.updateComponentTreeUI(this);
 	}
 	
 	/**
 	 * Methode, um das Leaderboard zu schliessen
 	 *
-	 * @version 22.06.2022
+	 * @version 26.06.2022
 	 */
 	public void closeLeaderBoard() {
 		leaderBoard.removeRows();
@@ -226,8 +244,13 @@ public class MainWindow extends JFrame{
 			case InMenu:
 				add(menuView);
 				break;
+			case Paused:
+				add(pauseMenu);
+				break;
 			case Dead:
 				add(deathScreen);
+				break;
+			default:
 				break;
 		}
 		
