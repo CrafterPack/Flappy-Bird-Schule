@@ -146,7 +146,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		if(programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
 		model.moveBackground();
 		if(programstate == ProgramState.InGame) {
-			model.tick();
+			model.tick(false);
 		
 			/*
 			 * Damit model.getPlayerDimensions nicht zweimal wiederholt werden muss, 
@@ -154,12 +154,21 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 			 */
 			Rectangle pd = model.getPlayerDimensions();   
 			if (pd.getY() >= (mainWindow.getWindowSize().getHeight() - pd.getHeight()) || model.isPlayerColliding()) {
+				programstate = ProgramState.Dying; // Wenn der Spieler stirbt, fällt er erst von der Bildflaeche herunter
+			}
+		}
+		else if (programstate == ProgramState.Dying) {			
+			model.tick(true);		
+			
+			if (model.getPlayerDimensions().getY() > mainWindow.getWindowSize().getHeight()) {
 				programstate = ProgramState.Dead;
+				
 				try {
 					leaderBoard.addPlayerToLeaderBoard(model.getScore());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
 				mainWindow.die(model.getScore(), leaderBoard.getHighScore());
 			}
 		}

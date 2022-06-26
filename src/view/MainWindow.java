@@ -78,8 +78,9 @@ public class MainWindow extends JFrame{
 		
 		if (programstate == ProgramState.InGame)
 			gameView.updateScore(score);
-			gameView.movePlayer(playerPosY);
-			gameView.movePipes(roehrenArrayDimensions);
+		
+		gameView.movePlayer(playerPosY);
+		gameView.movePipes(roehrenArrayDimensions);
 		
 		this.repaint(0, 0, 0, (int) windowSize.getWidth(), (int) windowSize.getHeight());
 	}

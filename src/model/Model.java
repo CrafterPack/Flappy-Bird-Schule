@@ -87,9 +87,9 @@ public class Model {
 	 * Methode fuer die Game Loop
 	 * Hier bekommt der Spieler Gravitation und die Roehren bewegen sich
 	 * 
-	 * @version 13.06.2022
+	 * @version 26.06.2022
 	 */
-	public void tick() {
+	public void tick(boolean dyingAnimation) {
 		acceleration += 0.15f;
 		playerPosY+=acceleration;
 		if (playerPosY <= 0f) { //Der Spieler kann nicht ueber die Decke hinaus fliegen
@@ -100,32 +100,33 @@ public class Model {
 		newPos.setLocation(player.getX(), playerPosY);
 		player.setLocation(newPos);   
 		
-		for(int i = 0; i < 3; i++) {
-			/*
-			 * upperPipe und lowerPipe werden initialisiert, damit roehrenArray[0][i] bzw. roehrenArray[1][i] nicht ständig wiederholt werden
-			 */
-			Rectangle upperPipe = roehrenArray[0][i];
-			Rectangle lowerPipe = roehrenArray[1][i];
-			if (upperPipe.getX() <= -80) {
-				int r = (int) (Math.random() * (640 - lueckenGroesse));    
-				upperPipe.setBounds(820, 0, 80, r);
-				lowerPipe.setBounds(820, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
-				pipeScored[i] = false; 
-			}
-			else {
-				upperPipe.setLocation((int) upperPipe.getX() - 2  , (int) upperPipe.getY());
-				lowerPipe.setLocation((int) lowerPipe.getX() - 2  , (int) lowerPipe.getY());
+		if(!dyingAnimation)
+			for(int i = 0; i < 3; i++) {
+				/*
+				 * upperPipe und lowerPipe werden initialisiert, damit roehrenArray[0][i] bzw. roehrenArray[1][i] nicht ständig wiederholt werden
+				 */
+				Rectangle upperPipe = roehrenArray[0][i];
+				Rectangle lowerPipe = roehrenArray[1][i];
+				if (upperPipe.getX() <= -80) {
+					int r = (int) (Math.random() * (640 - lueckenGroesse));    
+					upperPipe.setBounds(820, 0, 80, r);
+					lowerPipe.setBounds(820, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
+					pipeScored[i] = false; 
+				}
+				else {
+					upperPipe.setLocation((int) upperPipe.getX() - 2  , (int) upperPipe.getY());
+					lowerPipe.setLocation((int) lowerPipe.getX() - 2  , (int) lowerPipe.getY());
+					
+					if (score >= 10) { //Ab score >= 10 bewegen sich die Roehren vertikal
+						movePipesVertically(i);
+					}
+				}
 				
-				if (score >= 10) { //Ab score >= 10 bewegen sich die Roehren vertikal
-					movePipesVertically(i);
+				if (pipeScored[i] != true && roehrenArray[0][i].getX() <= player.getX()) { 
+					score++; 
+					pipeScored[i] = true;
 				}
 			}
-			
-			if (pipeScored[i] != true && roehrenArray[0][i].getX() <= player.getX()) { 
-				score++; 
-				pipeScored[i] = true;
-			}
-		}
 	}
 	
 	/**
@@ -170,7 +171,7 @@ public class Model {
 	 */
 	public void springen() {
 		acceleration-=5f;
-	}  
+	}
 	
 	/**
 	 * ueberprueft, ob der Spieler eine Roehre beruehrt
