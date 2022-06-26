@@ -146,7 +146,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		if(programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
 		model.moveBackground();
 		if(programstate == ProgramState.InGame) {
-			model.tick(false);
+			model.tick();
 		
 			/*
 			 * Damit model.getPlayerDimensions nicht zweimal wiederholt werden muss, 
@@ -158,7 +158,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 			}
 		}
 		else if (programstate == ProgramState.Dying) {			
-			model.tick(true);		
+			model.addPlayerGravitation();		
 			
 			if (model.getPlayerDimensions().getY() > mainWindow.getWindowSize().getHeight()) {
 				programstate = ProgramState.Dead;

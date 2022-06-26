@@ -89,7 +89,17 @@ public class Model {
 	 * 
 	 * @version 26.06.2022
 	 */
-	public void tick(boolean dyingAnimation) {
+	public void tick() {
+		addPlayerGravitation();   
+		movePipes();
+	}
+	
+	/**
+	 * Methode, um dem Spieler Gravitation zu geben
+	 *
+	 * @version 26.06.2022
+	 */
+	public void addPlayerGravitation() {
 		acceleration += 0.15f;
 		playerPosY+=acceleration;
 		if (playerPosY <= 0f) { //Der Spieler kann nicht ueber die Decke hinaus fliegen
@@ -98,35 +108,41 @@ public class Model {
 		}
 		Point newPos = new Point();
 		newPos.setLocation(player.getX(), playerPosY);
-		player.setLocation(newPos);   
-		
-		if(!dyingAnimation)
-			for(int i = 0; i < 3; i++) {
-				/*
-				 * upperPipe und lowerPipe werden initialisiert, damit roehrenArray[0][i] bzw. roehrenArray[1][i] nicht ständig wiederholt werden
-				 */
-				Rectangle upperPipe = roehrenArray[0][i];
-				Rectangle lowerPipe = roehrenArray[1][i];
-				if (upperPipe.getX() <= -80) {
-					int r = (int) (Math.random() * (640 - lueckenGroesse));    
-					upperPipe.setBounds(820, 0, 80, r);
-					lowerPipe.setBounds(820, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
-					pipeScored[i] = false; 
-				}
-				else {
-					upperPipe.setLocation((int) upperPipe.getX() - 2  , (int) upperPipe.getY());
-					lowerPipe.setLocation((int) lowerPipe.getX() - 2  , (int) lowerPipe.getY());
-					
-					if (score >= 10) { //Ab score >= 10 bewegen sich die Roehren vertikal
-						movePipesVertically(i);
-					}
-				}
+		player.setLocation(newPos);  
+	}
+	
+	/**
+	 * Methode, um die Roehren nach links zu verschieben (der Spieler bleibt ja auf seiner Stelle und bewegt sich nur vertikal)
+	 *
+	 * @version 26.06.2022
+	 */
+	private void movePipes() {
+		for(int i = 0; i < 3; i++) {
+			/*
+			 * upperPipe und lowerPipe werden initialisiert, damit roehrenArray[0][i] bzw. roehrenArray[1][i] nicht ständig wiederholt werden
+			 */
+			Rectangle upperPipe = roehrenArray[0][i];
+			Rectangle lowerPipe = roehrenArray[1][i];
+			if (upperPipe.getX() <= -80) {
+				int r = (int) (Math.random() * (640 - lueckenGroesse));    
+				upperPipe.setBounds(820, 0, 80, r);
+				lowerPipe.setBounds(820, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
+				pipeScored[i] = false; 
+			}
+			else {
+				upperPipe.setLocation((int) upperPipe.getX() - 2  , (int) upperPipe.getY());
+				lowerPipe.setLocation((int) lowerPipe.getX() - 2  , (int) lowerPipe.getY());
 				
-				if (pipeScored[i] != true && roehrenArray[0][i].getX() <= player.getX()) { 
-					score++; 
-					pipeScored[i] = true;
+				if (score >= 10) { //Ab score >= 10 bewegen sich die Roehren vertikal
+					movePipesVertically(i);
 				}
 			}
+			
+			if (pipeScored[i] != true && roehrenArray[0][i].getX() <= player.getX()) { 
+				score++; 
+				pipeScored[i] = true;
+			}
+		}
 	}
 	
 	/**
