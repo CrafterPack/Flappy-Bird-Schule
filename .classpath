@@ -9,5 +9,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx.base.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx.media.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx.web.jar"/>
+	<classpathentry kind="lib" path="lib/javafx/javafx-swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

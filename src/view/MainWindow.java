@@ -13,6 +13,10 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 
 import model.Tuple;
+import view.menu.DeathScreen;
+import view.menu.LeaderboardView;
+import view.menu.MenuView;
+import view.menu.PauseMenu;
 
 /**
  * Klasse fuer die allgemeine Benutzeroberflaeche
