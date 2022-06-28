@@ -33,9 +33,8 @@ public class GameView extends JPanel {
 
 		// Instanziieren des Spielers
 		player = new JLabel();
-		player.setBackground(Color.YELLOW);
 		player.setBounds(playerDimensions);
-		player.setOpaque(true);
+		player.setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Car.png").getImage()));
 		player.setVisible(true);
 		add(player);
 
@@ -50,7 +49,7 @@ public class GameView extends JPanel {
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				roehrenArray[i][j] = new JLabel();
-				roehrenArray[i][j].setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Pipe" + (i+1) + ".png").getImage().getScaledInstance((int) roehrenArrayDimensions[i][j].getWidth(), (int) roehrenArrayDimensions[i][j].getHeight(), Image.SCALE_DEFAULT)));
+				roehrenArray[i][j].setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Pipe" + (i+1) + ".png").getImage().getScaledInstance((int) roehrenArrayDimensions[i][j].getWidth(), (int) roehrenArrayDimensions[i][j].getHeight() + 1, Image.SCALE_DEFAULT))); //Da Icons nicht die Laenge oder Hohe 0 haben duerfen, steht bei getHeight() +1
 				roehrenArray[i][j].setBounds(roehrenArrayDimensions[i][j]);
 				roehrenArray[i][j].setVisible(true);
 
@@ -142,6 +141,6 @@ public class GameView extends JPanel {
 	 * @version 26.06.2022
 	 */
 	public void resizePipeIcon(int i, int j, int newWidth, int newHeight) {
-		roehrenArray[i][j].setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Pipe" + (i+1) + ".png").getImage().getScaledInstance((int) newWidth, (int) newHeight + 1, Image.SCALE_DEFAULT)));
+		roehrenArray[i][j].setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Pipe" + (i+1) + ".png").getImage().getScaledInstance((int) newWidth, (int) newHeight + 1, Image.SCALE_DEFAULT))); //Da Icons nicht die Laenge oder Hohe 0 haben duerfen, steht bei getHeight() +1
 	}
 }

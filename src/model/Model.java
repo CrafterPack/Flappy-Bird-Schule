@@ -34,7 +34,7 @@ public class Model {
 		
 		//Instanzieren des Spieler und der Roehren
 		playerPosY = 300f; //Starthoehe kann hier initialisiert werden
-		player = new Rectangle(100, (int) playerPosY, 75, 50  );
+		player = new Rectangle(100, (int) playerPosY, 133, 50);
 		
 		roehrenArray = new Rectangle[2][3];
 		for(int i = 0; i < 2; i++) {
@@ -57,12 +57,12 @@ public class Model {
 		roehrenArray[1][0].setBounds(481, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
 		
 		r = (int) (Math.random() * (640 - lueckenGroesse));
-		roehrenArray[0][1].setBounds(781, 0, 80, r);
-		roehrenArray[1][1].setBounds(781, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
+		roehrenArray[0][1].setBounds(831, 0, 80, r);
+		roehrenArray[1][1].setBounds(831, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
 		
 		r = (int) (Math.random() * (640 - lueckenGroesse));
-		roehrenArray[0][2].setBounds(1081, 0, 80, r);
-		roehrenArray[1][2].setBounds(1081, r + lueckenGroesse, 80, 640 - r - lueckenGroesse );
+		roehrenArray[0][2].setBounds(1181, 0, 80, r);
+		roehrenArray[1][2].setBounds(1181, r + lueckenGroesse, 80, 640 - r - lueckenGroesse );
 		
 		
 		backgroundsPosX = new int[2];
@@ -125,8 +125,8 @@ public class Model {
 			Rectangle lowerPipe = roehrenArray[1][i];
 			if (upperPipe.getX() <= -80) {
 				int r = (int) (Math.random() * (640 - lueckenGroesse));    
-				upperPipe.setBounds(820, 0, 80, r);
-				lowerPipe.setBounds(820, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
+				upperPipe.setBounds(970, 0, 80, r);
+				lowerPipe.setBounds(970, r + lueckenGroesse, 80, 640 - r - lueckenGroesse);
 				pipeScored[i] = false; 
 			}
 			else {
