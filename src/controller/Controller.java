@@ -14,7 +14,7 @@ import view.MainWindow;
  * Controller für die Programmsteuerung
  *
  * @author Simon Le
- * @version 22.06.2022
+ * @version 04.07.2022
  */
 
 public class Controller implements ActionListener, KeyListener, Runnable{
@@ -23,6 +23,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	private Model model;
 	private Leaderboard leaderBoard;
 	private MainWindow mainWindow;
+	private SoundController soundController;
 	
 	private ProgramState programstate = ProgramState.InMenu;
 	
@@ -30,6 +31,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		model = new Model();
 		leaderBoard = new Leaderboard();
 		mainWindow = new MainWindow(this, model.getPlayerDimensions(), model.getPipeArray(), model.getBackgroundsPosX(), this);
+		soundController = new SoundController();
 		
 		//Game Loop
 		gameThread = new Thread(this);
@@ -62,8 +64,10 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_SPACE) {
-			if (programstate == ProgramState.InGame)
+			if (programstate == ProgramState.InGame) {
 				model.springen();
+				soundController.jump();
+			}
 			else if (programstate == ProgramState.Dead)
 				restart();
 		}
@@ -73,10 +77,12 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 			else if (programstate == ProgramState.InGame) {
 				programstate = ProgramState.Paused;
 				mainWindow.pause();
+				soundController.pause();
 			}
 			else if (programstate == ProgramState.Paused) {
 				programstate = ProgramState.InGame;
 				mainWindow.resume();
+				soundController.resume();
 			}
 		}
 		else if (e.getKeyChar() == KeyEvent.VK_ENTER) {
@@ -164,6 +170,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 			Rectangle pd = model.getPlayerDimensions();   
 			if (pd.getY() >= (mainWindow.getWindowSize().getHeight() - pd.getHeight()) || model.isPlayerColliding()) {
 				programstate = ProgramState.Dying; // Wenn der Spieler stirbt, fällt er erst von der Bildflaeche herunter
+				soundController.die();
 			}
 		}
 		else if (programstate == ProgramState.Dying) {			
@@ -222,6 +229,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 				mainWindow.resizePipeIcon(i, j, (int) r.getWidth(), (int) r.getHeight());
 			}
 		}
+		soundController.restart();
 	}
 
 	public static void main(String[] args) {
