@@ -17,12 +17,12 @@ import javafx.scene.media.AudioClip;
 
 public class PlayerSounds {
 
-	private AudioClip jumpSound;
-	private AudioClip dieSound;
+	private AudioClip jumpSound, dieSound, explosionSound;
 	
 	public PlayerSounds() {
 		jumpSound = new AudioClip(new File("res\\sound\\Game\\player\\jumpsound.wav").toURI().toString());
 		dieSound = new AudioClip(new File("res\\sound\\Game\\player\\diesound.wav").toURI().toString());
+		explosionSound = new AudioClip(new File("res\\sound\\Game\\player\\explosionSound.wav").toURI().toString());
 	}
 	
 	public void playJumpSound() {
@@ -33,11 +33,19 @@ public class PlayerSounds {
 		dieSound.play();
 	}
 	
+	public void playExplosionSound() {
+		explosionSound.play();
+	}
+	
 	public void setJumpSoundVolume(double v) {
 		jumpSound.setVolume(v);
 	}
 	
 	public void setDieSoundVolume(double v) {
 		dieSound.setVolume(v);
+	}
+	
+	public void setExplosionSound(double v) {
+		explosionSound.setVolume(v);
 	}
 }

@@ -186,6 +186,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 				}
 				
 				mainWindow.die(model.getScore(), leaderBoard.getHighScore());
+				soundController.explode();
 			}
 		}
 	}
