@@ -5,7 +5,6 @@ package view.sounds;
 
 import java.io.File;
 
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.AudioClip;
 
 /**

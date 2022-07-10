@@ -14,7 +14,7 @@ import view.MainWindow;
  * Controller für die Programmsteuerung
  *
  * @author Simon Le
- * @version 04.07.2022
+ * @version 08.07.2022
  */
 
 public class Controller implements ActionListener, KeyListener, Runnable{
@@ -172,6 +172,11 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 				programstate = ProgramState.Dying; // Wenn der Spieler stirbt, fällt er erst von der Bildflaeche herunter
 				soundController.die();
 			}
+			
+			if(model.isInvincible()) 
+				mainWindow.setNotification("Invincible! time left: " + model.getInvincibilityTime());
+			else
+				mainWindow.setNotification("");
 		}
 		else if (programstate == ProgramState.Dying) {			
 			model.addPlayerGravitation();		

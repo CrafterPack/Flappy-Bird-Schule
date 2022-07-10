@@ -22,7 +22,7 @@ import view.menu.PauseMenu;
  * Klasse fuer die allgemeine Benutzeroberflaeche
  *
  * @author Simon Le
- * @version 26.06.2022
+ * @version 08.07.2022
  */
 
 public class MainWindow extends JFrame{
@@ -275,5 +275,17 @@ public class MainWindow extends JFrame{
 		}
 		
 		add(gameView);
+	}
+	
+	/**
+	 * Methode, um dem Spieler eine Benachrichtigung zu geben
+	 * Der Spieler bekommt alle 20 Punkte einen Bonus, bei dem er fuer eine bestimmte Zeit durch die Roehren fliegen kann
+	 * Diese Methode zeigt dem Spieler dann die verbleibende Zeit  
+	 *
+	 * @param text
+	 * @version 08.07.2022
+	 */
+	public void setNotification(String text) {
+		gameView.setNotification(text);
 	}
 }

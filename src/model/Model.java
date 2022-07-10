@@ -2,12 +2,16 @@ package model;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
 
 /**
  * Spiel-Logik
  *
  * @author Simon Le
- * @version 26.06.2022
+ * @version 08.07.2022
  */
 
 public class Model {
@@ -15,6 +19,7 @@ public class Model {
 	private Rectangle player;
 	private double playerPosY;
 	private double acceleration;
+	private boolean invincible;
 	
 	private Rectangle[][] roehrenArray;
 	private int[] pipeVerticalVelocity; //Ab einer bestimmten Punktzahl bewegen sich die Roehren vertikal --> zu Beginn 0
@@ -29,6 +34,9 @@ public class Model {
 	 * bewegen würde.
 	 */
 	private int[] backgroundsPosX; 
+	
+	private Timer timer;
+	private int invincibilityTime;
 	
 	public Model() {
 		
@@ -80,6 +88,8 @@ public class Model {
 			if(Math.random() < 0.5f) pipeVerticalVelocity[i] = -1;
 			else pipeVerticalVelocity[i] = +1;
 		}
+		
+		invincibilityTime = 10;
 	}
 	
 	
@@ -87,11 +97,32 @@ public class Model {
 	 * Methode fuer die Game Loop
 	 * Hier bekommt der Spieler Gravitation und die Roehren bewegen sich
 	 * 
-	 * @version 26.06.2022
+	 * @version 08.07.2022
 	 */
 	public void tick() {
 		addPlayerGravitation();   
 		movePipes();
+		
+		if (score >= 20 && ((double) score/20) % 1 == 0 && !invincible) {
+			System.out.println("Bonus!");
+			invincible = true;
+			
+			timer = new Timer(1000, new ActionListener() {
+			      public void actionPerformed(ActionEvent evt) {
+			          if (invincibilityTime == 0) {
+			        	  System.out.println("Time out");
+			        	  invincible = false;
+			        	  invincibilityTime = 10;
+			        	  timer.stop();
+			          }
+			          else {
+			        	  invincibilityTime--;
+			        	  System.out.println("bonus time left: " + invincibilityTime);
+			          }
+			      }
+			  });
+			timer.start();
+		}
 	}
 	
 	/**
@@ -195,13 +226,14 @@ public class Model {
 	 * @version 23.05.2022
 	 */
 	public boolean isPlayerColliding() {
-		for(Rectangle[] r1 : roehrenArray) {
-			for(Rectangle r2: r1) {
-				if (r2.intersects(player)) {
-					return true;
-				}      
+		if (!invincible)
+			for(Rectangle[] r1 : roehrenArray) {
+				for(Rectangle r2: r1) {
+					if (r2.intersects(player)) {
+						return true;
+					}      
+				}
 			}
-		}
 		
 		return false;
 	}
@@ -220,5 +252,13 @@ public class Model {
 	
 	public int getScore() {
 		return score;
+	}
+	
+	public boolean isInvincible() {
+		return invincible;
+	}
+	
+	public int getInvincibilityTime() {
+		return invincibilityTime;
 	}
 }

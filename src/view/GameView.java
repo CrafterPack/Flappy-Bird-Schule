@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
  * Klasse fuer die Spieloberflaeche
  *
  * @author Simon Le
- * @version 26.06.2022
+ * @version 08.07.2022
  */
 
 public class GameView extends JPanel {
@@ -25,7 +25,7 @@ public class GameView extends JPanel {
 	private JLabel player;
 	private JLabel[][] roehrenArray;
 	private JLabel[] backgrounds;
-	private JLabel scoreCounter;
+	private JLabel scoreCounter, notification;
 
 	public GameView(Dimension windowSize, Rectangle playerDimensions, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX) {
 		super();
@@ -42,6 +42,12 @@ public class GameView extends JPanel {
 		scoreCounter.setFont(new Font("Arial", Font.PLAIN, 50));
 		scoreCounter.setHorizontalAlignment(SwingConstants.CENTER);
 		add(scoreCounter);
+		
+		notification = new JLabel();
+		notification.setBounds((int) windowSize.getWidth() / 2 - 200, 10, 400, 100);
+		notification.setFont(new Font("Arial", Font.PLAIN, 40));
+		notification.setHorizontalAlignment(SwingConstants.CENTER);
+		add(notification);
 
 		// Instanziieren der Roehren
 		roehrenArray = new JLabel[2][3];
@@ -141,5 +147,17 @@ public class GameView extends JPanel {
 	 */
 	public void resizePipeIcon(int i, int j, int newWidth, int newHeight) {
 		roehrenArray[i][j].setIcon(new ImageIcon(new ImageIcon("res\\texture\\Game\\Pipe" + (i+1) + ".png").getImage().getScaledInstance((int) newWidth, (int) newHeight + 1, Image.SCALE_DEFAULT))); //Da Icons nicht die Laenge oder Hohe 0 haben duerfen, steht bei getHeight() +1
+	}
+	
+	/**
+	 * Methode, um dem Spieler eine Benachrichtigung zu geben
+	 * Der Spieler bekommt alle 20 Punkte einen Bonus, bei dem er fuer eine bestimmte Zeit durch die Roehren fliegen kann
+	 * Diese Methode zeigt dem Spieler dann die verbleibende Zeit  
+	 *
+	 * @param text
+	 * @version 08.07.2022
+	 */
+	public void setNotification(String text) {
+		notification.setText(text);
 	}
 }
