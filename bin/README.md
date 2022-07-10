@@ -18,6 +18,6 @@ Dokumentation vor dem Erstellen des GitHub-Repos:
 28.06.2022  1 Stunde  
 29.06.2022  1 Stunde  
 04.07.2022	1 Stunde  
-05.07.2022  0,25 Stunden
+05.07.2022  0,25 Stunden  
 06.07.2022	0,25 Stunden  
 08.07.2022	2 Stunden  
