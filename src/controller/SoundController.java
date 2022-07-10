@@ -27,7 +27,7 @@ public class SoundController extends JFXPanel {
 		player.setJumpSoundVolume(0.3);
 		player.setDieSoundVolume(0.7);
 		player.setExplosionSound(0.7);
-		bgMusic.setVolume(0.4);
+		bgMusic.setVolume(0.6);
 		
 		bgMusic.play();
 	}

@@ -3,10 +3,10 @@
  */
 package view.menu;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -25,10 +25,9 @@ public class MenuView extends MenuSuperClass{
 	public MenuView(Dimension windowSize, ActionListener al) {
 		super(windowSize, "Start", "Quit", al);
 		
-		super.setLabelBounds(40, 40, 400, 200);
-		super.getLabel().setBackground(Color.RED);
-		super.getLabel().setOpaque(true);
-		super.setLabelText("Logo");
+		super.setLabelBounds(38, 40, 404, 200);
+		super.setLabelIcon(new ImageIcon(new ImageIcon("res\\texture\\logo.png").getImage()));
+		super.getLabel().setOpaque(false);
 		
 		nameInput = new JTextField();
 		nameInput.setBounds(40, 360, 400, 50);
