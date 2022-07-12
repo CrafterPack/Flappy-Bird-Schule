@@ -23,6 +23,10 @@ public class PauseMenu extends MenuSuperClass {
 		super.setLabelText("Game Paused");
 	}
 	
+	/**
+	 * Getter-Methoden
+	 */
+	
 	public JButton getResumeButton() {
 		return super.getButton1();
 	}

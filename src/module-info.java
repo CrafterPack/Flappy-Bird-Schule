@@ -1,3 +1,9 @@
+/**
+ * Java-Datei, damit das Programm problemlos auf JavaFX und JSON-simple zugreifen kann
+ * 
+ * @author Simon Le
+ * @version 10.07.2022
+ */
 module flappybird {
 	exports controller;
 	exports model;

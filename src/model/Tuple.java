@@ -20,6 +20,10 @@ public class Tuple {
 		score = s;
 	}
 	
+	/**
+	 * Getter-Methoden
+	 */
+	
 	public String getName() {
 		return name;
 	}
@@ -28,6 +32,12 @@ public class Tuple {
 		return score;
 	}
 	
+	/**
+	 * Setter-Methode, die den Score initialisiert 
+	 *
+	 * @param s
+	 * @version 21.06.2022
+	 */
 	public void setScore(int s) {
 		score = s;
 	}

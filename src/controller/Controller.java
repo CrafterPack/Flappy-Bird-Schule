@@ -28,6 +28,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	private ProgramState programstate = ProgramState.InMenu;
 	
 	public Controller() {
+		//Instanziieren der Objekte
 		model = new Model();
 		leaderBoard = new Leaderboard();
 		mainWindow = new MainWindow(this, model.getPlayerDimensions(), model.getPipeArray(), model.getBackgroundsPosX(), this);
@@ -38,7 +39,12 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		gameThread.start();
 	}
 
-	
+	/**
+	 * ActionListener-Methode, die die Buttonklicks liest
+	 * 
+	 * @param ae
+	 * @version 22.06.2022
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == mainWindow.getStartButton()) {
 			start();
@@ -61,7 +67,12 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		}
 	}
 
-
+	/**
+	 * KeyListener-Methode, die die Tastatureingaben liest
+	 * 
+	 * @param e
+	 * @version 04.07.2022
+	 */
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_SPACE) {
 			if (programstate == ProgramState.InGame) {
@@ -146,7 +157,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 	/**
 	 * Game-Loop-Methode fuer das Model
 	 * 
-	 * @version 26.06.2022
+	 * @version 05.07.2022
 	 */
 	public void tick() {
 		if(programstate == ProgramState.InMenu || programstate == ProgramState.InGame)
@@ -173,6 +184,9 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 				soundController.die();
 			}
 			
+			/*
+			 * Alle 20 Punkte bekommt der Spieler einen Bonus und kann fuer 10 Sekunden durch die Roehren fliegen
+			 */
 			if(model.isInvincible()) 
 				mainWindow.setNotification("Invincible! time left: " + model.getInvincibilityTime());
 			else
@@ -181,6 +195,7 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		else if (programstate == ProgramState.Dying) {			
 			model.addPlayerGravitation();		
 			
+			//Wenn der Spieler am Boden aufkommt, ist er endgueltig tot
 			if (model.getPlayerDimensions().getY() > mainWindow.getWindowSize().getHeight()) {
 				programstate = ProgramState.Dead;
 				
@@ -238,6 +253,12 @@ public class Controller implements ActionListener, KeyListener, Runnable{
 		soundController.restart();
 	}
 
+	/**
+	 * Main-Methode
+	 *
+	 * @param args
+	 * @version 23.05.2022
+	 */
 	public static void main(String[] args) {
 		new Controller();
 	}

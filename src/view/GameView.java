@@ -37,12 +37,14 @@ public class GameView extends JPanel {
 		player.setVisible(true);
 		add(player);
 
+		//JLabel, das den Score anzeigt
 		scoreCounter = new JLabel();
 		scoreCounter.setBounds((int) windowSize.getWidth() / 2 - 50, 100, 100, 100);
 		scoreCounter.setFont(new Font("Arial", Font.PLAIN, 50));
 		scoreCounter.setHorizontalAlignment(SwingConstants.CENTER);
 		add(scoreCounter);
 		
+		//JLabel, das dem Spieler Benachrichtigungen gibt
 		notification = new JLabel();
 		notification.setBounds((int) windowSize.getWidth() / 2 - 200, 10, 400, 100);
 		notification.setFont(new Font("Arial", Font.PLAIN, 40));
@@ -73,8 +75,7 @@ public class GameView extends JPanel {
 			add(backgrounds[i]);
 		}
 		
-		
-
+		//Spielfenster wird eingestellt
 		setBounds(0, 0, (int) windowSize.getWidth(), (int) windowSize.getHeight());
 		setLayout(null);
 		setVisible(true);

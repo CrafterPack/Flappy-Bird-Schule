@@ -54,6 +54,12 @@ public class Leaderboard {
 		}
 	}
 	
+	/**
+	 * Setter-Methode, um den Spielernamen zu initialisieren 
+	 *
+	 * @param name
+	 * @version 21.06.2022
+	 */
 	public void setPlayerName(String name) {
 		currentPlayerName = name;
 	}
@@ -101,6 +107,10 @@ public class Leaderboard {
 		bfWr.write(array.toJSONString());
 		bfWr.close();
 	}
+	
+	/**
+	 * Getter-Methoden
+	 */
 	
 	public int getHighScore() {
 		for (int i = 0; i < this.list.size(); i++) {

@@ -28,7 +28,7 @@ public class LeaderboardView extends JPanel{
 	private JButton closeLeaderBoardButton;
 	
 	public LeaderboardView(Dimension windowSize, ActionListener al) {
-		
+		//Instanziieren der Objekte
 		defaultTableModel = new DefaultTableModel(null, column);
 		table = new JTable(defaultTableModel);
 		table.setDefaultEditor(Object.class, null);
@@ -42,37 +42,39 @@ public class LeaderboardView extends JPanel{
 		closeLeaderBoardButton.addActionListener(al);
 		add(closeLeaderBoardButton);
 		
+		//JPanel wird richtig eingestellt
 		setBounds(0, 0, (int) windowSize.getWidth(), (int) windowSize.getHeight());
 		setLayout(null);
 		setOpaque(false);
 		setVisible(true);
 	}
 	
+	/**
+	 * Getter-Methode
+	 */
+	
 	public JButton getCloseLeaderBoardButton() {
 		return closeLeaderBoardButton;
 	}
 	
+	/**
+	 * fuegt eine neue Zeile (= neuer Spieler) in die Tabelle 
+	 *
+	 * @param obj
+	 * @version 22.06.2022
+	 */
 	public void addRow(Object[] obj) {
 		defaultTableModel.addRow(obj);
 	}
 	
+	/**
+	 * loescht alle Zeilen 
+	 *
+	 * @version 22.06.2022
+	 */
 	public void removeRows() {
 		if (defaultTableModel.getRowCount() > 0)
 			for (int i = defaultTableModel.getRowCount() - 1; i > -1; i--)
 				defaultTableModel.removeRow(i);
 	}
-	
-//	public static void main(String[] args) {
-//		JFrame f = new JFrame();
-//		LeaderboardView lbv = new LeaderboardView(new Dimension(480, 640), null);
-//		
-//		f.add(lbv);
-//		
-//		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		f.setLayout(null);	
-//		f.setResizable(false);
-//		f.getContentPane().setPreferredSize(new Dimension(480, 640));
-//		f.setVisible(true);
-//		f.pack();
-//	}
 }

@@ -21,9 +21,20 @@ public class DeathScreen extends MenuSuperClass{
 		super(windowSize, "Restart", "Quit", al);
 	}
 	
+	/**
+	 * Setter-Methode, um den Score und den High-Score am Verlieren anzuzeigen 
+	 *
+	 * @param score
+	 * @param highscore
+	 * @version 26.06.2022
+	 */
 	public void setScore(int score, int highscore) {
 		super.setLabelText("<html>You died. Score: " + score + "<br/> Your highscore: " + highscore + "<html>");
 	}
+	
+	/**
+	 * Getter-Methoden
+	 */
 	
 	public JButton getRestartButton() {
 		return super.getButton1();

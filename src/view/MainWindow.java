@@ -37,7 +37,7 @@ public class MainWindow extends JFrame{
 	private ProgramState programstate = ProgramState.InMenu;
 	
 	public MainWindow(ActionListener al, Rectangle playerDimensions, Rectangle[][] roehrenArrayDimensions, int[] backgroundsPosX, KeyListener kl) {
-		super();
+		super("Autobahnflieger");
 		windowSize = new Dimension(480, 640);
 		
 		//Instanziieren der JPanels
@@ -104,6 +104,10 @@ public class MainWindow extends JFrame{
 		gameView.resizePipeIcon(i, j, newWidth, newHeight);
 	}
 	
+	/**
+	 * Getter-Methoden
+	 */
+	
 	public Dimension getWindowSize() {
 		return windowSize;
 	}
@@ -130,6 +134,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	public JButton getOpenLeaderBoardButton() {
+		//Je nach dem, in welchem Zustand das Program ist, wird der jeweilige JButton zurueckgegeben
 		switch (programstate) {
 			case InMenu: 
 				return menuView.getOpenLeaderBoardButton();
@@ -151,7 +156,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	/**
-	 * Entfernt das menuView-JPanel und setzt ingame auf true
+	 * Entfernt das menuView-JPanel und setzt den programstate auf InGame
 	 *
 	 * @version 31.05.2022
 	 */
@@ -181,7 +186,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	/**
-	 * Methode, um das Spiel neuzustarten
+	 * Methode, um das Spiel neuzustarten: entfernt das DeathScreen-JPanel und setzt den programstate auf InGame
 	 * 
 	 * @version 01.06.2022
 	 */
@@ -193,7 +198,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	/**
-	 * Methode, um das Spiel zu pausieren
+	 * Methode, um das Spiel zu pausieren: entfernt die GameView und fuegt zuerst das PauseMenu and wieder die GameView ein, damit diese im Hintergrund ist
 	 * 
 	 * @version 15.06.2022
 	 */
@@ -207,7 +212,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	/**
-	 * Methode, um das Spiel fortzufahren
+	 * Methode, um das Spiel fortzufahren: entfernt das PauseMenu und setzt den programstate auf InGame
 	 * 
 	 * @version 15.06.2022
 	 */
@@ -260,6 +265,7 @@ public class MainWindow extends JFrame{
 		remove(leaderBoard);
 		remove(gameView);
 		
+		//Je nach dem, in welchem Zustand das Programm vorher war, wird das vorherige JPanel angezeigt --> InGame offensichtlich nicht dabei
 		switch(programstate) {
 			case InMenu:
 				add(menuView);

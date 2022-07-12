@@ -72,7 +72,7 @@ public class Model {
 		roehrenArray[0][2].setBounds(1181, 0, 80, r);
 		roehrenArray[1][2].setBounds(1181, r + lueckenGroesse, 80, 640 - r - lueckenGroesse );
 		
-		
+		//Instanziieren des Hintergrundarrays
 		backgroundsPosX = new int[2];
 		backgroundsPosX[0] = 0;
 		backgroundsPosX[1] = 500;
@@ -237,6 +237,10 @@ public class Model {
 		
 		return false;
 	}
+	
+	/**
+	 * Getter-Methoden
+	 */
 	
 	public Rectangle getPlayerDimensions() {
 		return player;
